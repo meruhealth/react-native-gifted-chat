@@ -7,8 +7,9 @@ import { Platform, StyleSheet, TextInput } from 'react-native';
 import { MIN_COMPOSER_HEIGHT, DEFAULT_PLACEHOLDER } from './Constant';
 import Color from './Color';
 
-export default class Composer extends React.Component {
+function noop () {}
 
+export default class Composer extends React.PureComponent {
   onContentSizeChange(e) {
     const { contentSize } = e.nativeEvent;
 
@@ -40,7 +41,6 @@ export default class Composer extends React.Component {
         onChangeText={(text) => this.onChangeText(text)}
         style={[styles.textInput, this.props.textInputStyle, { height: this.props.composerHeight }]}
         autoFocus={this.props.textInputAutoFocus}
-        // value={this.props.text}
         accessibilityLabel={this.props.text || this.props.placeholder}
         enablesReturnKeyAutomatically
         underlineColorAndroid="transparent"
@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
 
 Composer.defaultProps = {
   composerHeight: MIN_COMPOSER_HEIGHT,
-  text: '',
   placeholderTextColor: Color.defaultProps,
   placeholder: DEFAULT_PLACEHOLDER,
   textInputProps: null,
@@ -79,13 +78,12 @@ Composer.defaultProps = {
   textInputStyle: {},
   textInputAutoFocus: false,
   keyboardAppearance: 'default',
-  onTextChanged: () => {},
-  onInputSizeChanged: () => {},
+  onTextChanged: noop,
+  onInputSizeChanged: noop,
 };
 
 Composer.propTypes = {
   composerHeight: PropTypes.number,
-  text: PropTypes.string,
   placeholder: PropTypes.string,
   placeholderTextColor: PropTypes.string,
   textInputProps: PropTypes.object,
